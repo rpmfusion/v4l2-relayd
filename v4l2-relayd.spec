@@ -5,7 +5,7 @@
 Name:           v4l2-relayd
 Summary:        Utils for relaying the video stream between two video devices
 Version:        0.1.2
-Release:        14.%{commitdate}git%{shortcommit}%{?dist}
+Release:        15.%{commitdate}git%{shortcommit}%{?dist}
 License:        GPL-2.0-only
 
 Source0:        https://gitlab.com/vicamo/v4l2-relayd//-/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
@@ -63,6 +63,9 @@ install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_presetdir}/95-v4l2-relayd.preset
 %{_presetdir}/95-v4l2-relayd.preset
 
 %changelog
+* Sun Jul 27 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.1.2-15.20220126git2e4d5c9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
+
 * Tue Jan 28 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.1.2-14.20220126git2e4d5c9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
 
