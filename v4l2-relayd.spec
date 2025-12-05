@@ -1,17 +1,15 @@
-%global commit 2e4d5c9ba53bfe8cfe16ea91932c8e5ecb090a87
-%global commitdate 20220126
+%global commit d6ec36aae87e765eddef8308f0f58c7b5be95ad7
+%global commitdate 20251028
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           v4l2-relayd
 Summary:        Utils for relaying the video stream between two video devices
-Version:        0.1.2
-Release:        15.%{commitdate}git%{shortcommit}%{?dist}
+Version:        0.2.0
+Release:        1.%{commitdate}git%{shortcommit}%{?dist}
 License:        GPL-2.0-only
 
 Source0:        https://gitlab.com/vicamo/v4l2-relayd//-/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
 Source1:        v4l2-relayd.preset
-
-Patch0:         0001-Set-a-new-ID-offset-for-the-private-event.patch
 
 BuildRequires:  systemd-rpm-macros
 BuildRequires:  gcc
@@ -41,8 +39,9 @@ autoreconf --force --install --verbose
 %install
 %make_install modprobedir=%{_modprobedir}
 sed -i '/^EnvironmentFile=\/etc\/default\/v4l2-relayd/a EnvironmentFile=-\/run\/v4l2-relayd' %{buildroot}%{_unitdir}/v4l2-relayd.service
-sed -i 's/videoconvert/videoconvert ! video\/x-raw,format=I420/g' %{buildroot}%{_unitdir}/v4l2-relayd.service
+sed -i 's/Virtual Camera/Intel MIPI Camera/g' %{buildroot}%{_modprobedir}/v4l2-relayd.conf
 install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_presetdir}/95-v4l2-relayd.preset
+ln -s /run/v4l2-relayd  %{buildroot}%{_sysconfdir}/v4l2-relayd.d/icamerasrc.conf
 
 %post
 %systemd_post v4l2-relayd.service
@@ -57,12 +56,19 @@ install -p -D -m 0644 %{SOURCE1} %{buildroot}%{_presetdir}/95-v4l2-relayd.preset
 %license LICENSE
 %{_bindir}/v4l2-relayd
 %{_sysconfdir}/default/v4l2-relayd
+%dir %{_sysconfdir}/v4l2-relayd.d
+%{_sysconfdir}/v4l2-relayd.d/icamerasrc.conf
 %{_modprobedir}/v4l2-relayd.conf
 %{_modulesloaddir}/v4l2-relayd.conf
+%{_systemdgeneratordir}/v4l2-relayd-generator
 %{_unitdir}/v4l2-relayd.service
+%{_unitdir}/v4l2-relayd@.service
 %{_presetdir}/95-v4l2-relayd.preset
 
 %changelog
+* Fri Dec 05 2025 Kate Hsuan <hpa@redhat.com> - 0.2.0-1.20251028gitd6ec36a
+- Update to upstream release 0.2.0
+
 * Sun Jul 27 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.1.2-15.20220126git2e4d5c9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
 
