@@ -5,7 +5,7 @@
 Name:           v4l2-relayd
 Summary:        Utils for relaying the video stream between two video devices
 Version:        0.2.0
-Release:        1.%{commitdate}git%{shortcommit}%{?dist}
+Release:        2.%{commitdate}git%{shortcommit}%{?dist}
 License:        GPL-2.0-only
 
 Source0:        https://gitlab.com/vicamo/v4l2-relayd//-/archive/%{commit}/%{name}-%{shortcommit}.tar.gz
@@ -66,6 +66,9 @@ ln -s /run/v4l2-relayd  %{buildroot}%{_sysconfdir}/v4l2-relayd.d/icamerasrc.conf
 %{_presetdir}/95-v4l2-relayd.preset
 
 %changelog
+* Mon Feb 02 2026 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.2.0-2.20251028gitd6ec36a
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
+
 * Fri Dec 05 2025 Kate Hsuan <hpa@redhat.com> - 0.2.0-1.20251028gitd6ec36a
 - Update to upstream release 0.2.0
 
